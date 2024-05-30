@@ -1,1 +1,1 @@
-# Discord-assistant
+# stock-bot
