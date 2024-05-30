@@ -16,7 +16,7 @@ vector_store_id = ""
 load_dotenv()
 
 client = openai.OpenAI()
-model = "gpt-3.5-turbo"
+model = "gpt-4o"
 
 DISCORD_API_TOKEN = os.getenv("DISCORD_API_TOKEN")
 
