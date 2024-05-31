@@ -25,9 +25,14 @@ Discord (chatGPT) assistant with the personality of Splinter from TMNT.
 ## Add functionality
 1. Download the contents of this repository
 2. Generate OpenAI API key in here: https://platform.openai.com/account/api-keys
-3. Navigate to the downloaded repository and fill in Discord token and OpenAI API key to the .env file
-4. Open cmd/terminal and navigate to the downloaded repository
-5. In cmd/terminal type the following commands:
+3. Create .env file to the repository root and add following fields to it:
+```
+DISCORD_API_TOKEN=""
+OPENAI_API_KEY=""
+```
+4. Fill the API token/key fields with keys you obtained earlier
+5. Open cmd/terminal and navigate to the downloaded repository
+6. In cmd/terminal type the following commands:
 
     1. `pip install virtualenv`
     2. `python3 -m venv venv`
@@ -36,6 +41,6 @@ Discord (chatGPT) assistant with the personality of Splinter from TMNT.
     5. `pip install -r requirements.txt`
     8. `python3 main.py`
 
-6. OPTIONAL: Create "files" directory in to repository root and add your .pdf files in to it
+7. OPTIONAL: Create "files" directory in to repository root and add your .pdf files in to it
 
 Your bot should now be running for as long as you have the cmd/terminal open
