@@ -39,8 +39,8 @@ def create_bot():
 
 
 def add_files():
-    # Create a vector store caled "Financial Statements"
-    vector_store = client.beta.vector_stores.create(name="Financial Statements")
+    # Create a vector store called "data"
+    vector_store = client.beta.vector_stores.create(name="data")
     global vector_store_id 
     vector_store_id = vector_store.id
     
@@ -168,7 +168,10 @@ def Dall_E(description):
 async def on_ready():
     print('Logged on as', bot.user)
     create_bot()
-    add_files()
+    try:
+        add_files()
+    except Exception as e:
+        print(f"An error occurred: {e}")
     create_thread()
 
 @bot.event
