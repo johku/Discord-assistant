@@ -36,6 +36,6 @@ Discord (chatGPT) assistant with the personality of Splinter from TMNT.
     5. `pip install -r requirements.txt`
     8. `python3 main.py`
 
-6. Create "files" directory in to repository root and add your .pdf files in to it
+6. OPTIONAL: Create "files" directory in to repository root and add your .pdf files in to it
 
 Your bot should now be running for as long as you have the cmd/terminal open
