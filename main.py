@@ -175,7 +175,6 @@ async def on_ready():
     except Exception as e:
         print(f"An error occurred: {e}")
     create_thread()
-    create_run()
 
 @bot.event
 async def on_message(message):
@@ -188,6 +187,7 @@ async def on_message(message):
         # Extract the prompt after "!prompt" (excluding the command itself)
         prompt = message.content[len('!prompt'):].strip()
         create_message(prompt)
+        create_run()
 
         # Generate a response using ChatGPT
         response = ChatGPT(client=client, thread_id=thread_id, run_id=run_id)
