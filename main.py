@@ -102,36 +102,26 @@ def create_run():
     run_id = run.id
 
 
+def wrap_text_in_file(file_path, line_length=200):
+    with open(file_path, 'r') as infile:
+        lines = infile.readlines()
 
+    wrapped_lines = []
 
+    for line in lines:
+        line = line.rstrip('\n')
+        while len(line) > line_length:
+            # Find the position to split the line
+            split_pos = line.rfind(' ', 0, line_length)
+            if split_pos == -1:
+                split_pos = line_length
+            wrapped_lines.append(line[:split_pos])
+            line = line[split_pos:].lstrip()
+        wrapped_lines.append(line)
 
-# def wait_for_run_completion(client, thread_id, run_id, sleep_interval=5):
-#     """
-
-#     Waits for a run to complete and prints the elapsed time.:param client: The OpenAI client object.
-#     :param thread_id: The ID of the thread.
-#     :param run_id: The ID of the run.
-#     :param sleep_interval: Time in seconds to wait between checks.
-#     """
-#     while True:
-#         try:
-#             run = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
-#             if run.completed_at:
-#                 # Get messages here once Run is completed!
-#                 messages = client.beta.threads.messages.list(thread_id=thread_id)
-#                 last_message = messages.data[0]
-#                 response = last_message.content[0].text.value
-#                 return response
-#         except Exception as e:
-#             logging.error(f"An error occurred while retrieving the run: {e}")
-#             break
-#         logging.info("Waiting for run to complete...")
-#         time.sleep(sleep_interval)
-
-
-# wait_for_run_completion(client=client, thread_id=thread_id, run_id=run.id)
-
-
+    with open(file_path, 'w') as outfile:
+        for line in wrapped_lines:
+            outfile.write(line + '\n')
 
 def ChatGPT(client, thread_id, run_id, sleep_interval=5):
 
@@ -194,10 +184,21 @@ async def on_message(message):
 
         # Limit the lenght of response to 2000 characters as required by Discord
         if len(response) > 2000:
-            response = response[:2000]
+            # Write response to a text file
+            response_file_path = "response.txt"
+            with open(response_file_path, "w") as file:
+                file.write(response)
 
-        # Send the response back to the Discord channel
-        await message.channel.send(response)
+            wrap_text_in_file(response_file_path)
+
+            # Send the response as a text file attachment to the Discord channel
+            await message.channel.send(file=discord.File(response_file_path))
+
+            # Delete the local text file
+            os.remove(response_file_path)
+        else:
+            # Send the response back to the Discord channel
+            await message.channel.send(response)
 
     # Check if the message starts with "!image"
     if message.content.startswith("!image"):
