@@ -148,13 +148,18 @@ def ChatGPT(client, thread_id, run_id, sleep_interval=5):
 
 
 def Dall_E(description):
-    response = client.images.generate(prompt=description,
-    n=1,
-    size="512x512")
+    response = client.images.generate(
+        model="dall-e-3",
+        prompt=description,
+        size="1024x1024",
+        quality="standard",
+        n=1,
+    )
 
     image_url = response.data[0].url
 
     return image_url
+
 
 @bot.event
 async def on_ready():
